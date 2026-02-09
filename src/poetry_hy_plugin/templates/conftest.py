@@ -1,6 +1,6 @@
 from pathlib import Path
 
-import hy
+import hy  # noqa: F401
 import pytest
 
 TESTS_DIR = Path.cwd() / "tests"

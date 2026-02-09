@@ -1,6 +1,3 @@
-import os
-from pathlib import Path
-
 from poetry_hy_plugin.plugin import _copy_tree
 
 

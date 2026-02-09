@@ -96,9 +96,6 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/poetry/v')
     needs: [lint, test-poetry, build-poetry]
     runs-on: ubuntu-latest
-    environment: pypi
-    permissions:
-      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -108,15 +105,13 @@ jobs:
       - run: python -m build poetry/
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
+          password: ${{ secrets.PYPI_TOKEN }}
           packages-dir: poetry/dist/
 
   publish-hatch:
     if: startsWith(github.ref, 'refs/tags/hatch/v')
     needs: [lint, test-hatch, build-hatch]
     runs-on: ubuntu-latest
-    environment: pypi
-    permissions:
-      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -126,4 +121,5 @@ jobs:
       - run: python -m build --wheel hatch/
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
+          password: ${{ secrets.PYPI_TOKEN }}
           packages-dir: hatch/dist/

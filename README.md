@@ -26,7 +26,7 @@ my-project/
 ├── LICENSE
 ├── src/
 │   └── my_project/
-│       ├── __init__.hy
+│       ├── __init__.py
 │       └── main.hy
 └── tests/
     ├── conftest.py         # pytest discovery for .hy files

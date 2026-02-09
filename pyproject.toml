@@ -18,3 +18,8 @@ packages = ["src/hatch_hy"]
 
 [tool.hatch.build.targets.wheel.sources]
 "src" = ""
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-p", "no:cacheprovider", "--import-mode=importlib"]
+norecursedirs = ["src"]

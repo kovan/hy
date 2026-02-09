@@ -1,7 +1,4 @@
-from pathlib import Path
-from unittest.mock import MagicMock
-
-from hatch_hy.template import _collect_files, HyTemplate
+from hatch_hy.template import _collect_files
 
 
 def _make_fake_dir(tmp_path, files_dict):
@@ -14,7 +11,6 @@ def _make_fake_dir(tmp_path, files_dict):
 
 
 def test_collects_flat_files(tmp_path):
-    from hatch.template import File
     from hatch.utils.fs import Path as HatchPath
 
     src = _make_fake_dir(tmp_path, {

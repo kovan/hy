@@ -12,6 +12,7 @@ def _generate_project(tmp_path, name="my-cool-app"):
     replacements = {
         "{project_name}": name,
         "{module_name}": module_name,
+        "{hy_python_requires}": ">=3.9,<3.15",
     }
 
     from importlib.resources import files
@@ -60,6 +61,13 @@ def test_placeholders_replaced_in_content(tmp_path):
     test = (project_dir / "tests" / "test_main.hy").read_text()
     assert "my_cool_app" in test
     assert "{module_name}" not in test
+
+
+def test_hy_python_requires_placeholder_replaced(tmp_path):
+    project_dir, _ = _generate_project(tmp_path, "my-cool-app")
+    pyproject = (project_dir / "pyproject.toml").read_text()
+    assert ">=3.9,<3.15" in pyproject
+    assert "{hy_python_requires}" not in pyproject
 
 
 def test_refuses_existing_directory(tmp_path):

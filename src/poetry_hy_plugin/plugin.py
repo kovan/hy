@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import json
 import shutil
+import urllib.request
 from importlib.resources import files
 from pathlib import Path
 
@@ -9,6 +11,24 @@ from cleo.helpers import argument
 from poetry.plugins.application_plugin import ApplicationPlugin
 
 TEMPLATES = files("poetry_hy_plugin") / "templates"
+
+
+def _fetch_hy_python_requires() -> str:
+    """Fetch Hy's Requires-Python from PyPI."""
+    url = "https://pypi.org/pypi/hy/json"
+    try:
+        with urllib.request.urlopen(url, timeout=10) as resp:
+            data = json.loads(resp.read())
+        requires_python = data["info"]["requires_python"]
+    except (urllib.error.URLError, OSError, KeyError, json.JSONDecodeError) as exc:
+        raise RuntimeError(
+            f"Failed to fetch Hy's Python requirement from PyPI ({url}): {exc}"
+        ) from exc
+    if not requires_python:
+        raise RuntimeError(
+            f"PyPI returned no requires_python for Hy ({url})"
+        )
+    return requires_python
 
 
 class NewHyCommand(Command):
@@ -30,6 +50,7 @@ class NewHyCommand(Command):
         replacements = {
             "{project_name}": name,
             "{module_name}": module_name,
+            "{hy_python_requires}": _fetch_hy_python_requires(),
         }
 
         # Walk the template tree and copy files with substitutions

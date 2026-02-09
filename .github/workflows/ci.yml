@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - run: pip install ruff
+      - run: ruff check hooks/
+
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install cookiecutter
+      - run: cookiecutter --no-input . -o "${{ runner.temp }}"
+      - name: Verify rendered template
+        run: |
+          test -f "${{ runner.temp }}/my-hy-project/pyproject.toml"
+          test -f "${{ runner.temp }}/my-hy-project/README.md"
+          test -f "${{ runner.temp }}/my-hy-project/LICENSE"
+          test -f "${{ runner.temp }}/my-hy-project/conftest.py"
+          test -f "${{ runner.temp }}/my-hy-project/src/my_hy_project/__init__.py"
+          test -f "${{ runner.temp }}/my-hy-project/src/my_hy_project/__init__.hy"
+          test -f "${{ runner.temp }}/my-hy-project/src/my_hy_project/main.hy"
+          test -f "${{ runner.temp }}/my-hy-project/tests/test_main.hy"

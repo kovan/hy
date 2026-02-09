@@ -35,14 +35,30 @@ class HyTemplate(TemplateInterface):
 
         result = []
         _collect_files(TEMPLATES, Path(), replacements, result)
+        self._hy_files = set(id(f) for f in result)
         return result
 
     def finalize_files(self, config, files):
+        pkg = config["package_name"]
+
+        # Remove files from other plugins that conflict with ours
+        to_remove = []
+        for f in files:
+            if id(f) in self._hy_files:
+                continue
+            name = f.path.name
+            # Remove duplicate top-level files we already provide
+            if name in ("pyproject.toml", "LICENSE", "LICENSE.txt", "README.md", "conftest.py"):
+                to_remove.append(f)
+            # Remove default plugin's __about__.py
+            elif f.path.parts and f.path.parts[0] == "src" and name == "__about__.py":
+                to_remove.append(f)
+        for f in to_remove:
+            files.remove(f)
+
         if self.plugin_config["src-layout"]:
-            pkg = config["package_name"]
             for f in files:
                 if f.path and f.path.parts and f.path.parts[0] == "src":
-                    # Rename placeholder module directory
                     parts = list(f.path.parts)
                     if len(parts) >= 3 and parts[1] == "hy_project":
                         parts[1] = pkg

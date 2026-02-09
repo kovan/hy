@@ -8,26 +8,7 @@ A [Hatch](https://hatch.pypa.io/) template plugin for [Hy](https://hylang.org/) 
 
 ```bash
 pipx inject hatch hatch-hy
-```
-
-## Configuration
-
-Add the plugin to your Hatch config (`~/.config/hatch/config.toml`):
-
-```toml
-# Replace the default template with the Hy template
-[template.plugins.hy]
-src-layout = true
-```
-
-To keep the default Python template alongside:
-
-```toml
-[template.plugins.default]
-tests = true
-
-[template.plugins.hy]
-src-layout = true
+hatch config set template.plugins.hy.src-layout true
 ```
 
 ## Usage
@@ -45,8 +26,9 @@ my-hy-project/
 ├── LICENSE
 ├── src/
 │   └── my_hy_project/
-│       ├── __init__.hy
+│       ├── __init__.py
 │       └── main.hy
 └── tests/
+    ├── conftest.py
     └── test_main.hy
 ```

@@ -7,7 +7,6 @@ license = "MIT"
 packages = [{include = "{module_name}", from = "src"}]
 
 [tool.poetry.dependencies]
-python = ">=3.9"
 hy = {version = ">=1.0", python = ">=3.9,<3.15"}
 
 [build-system]

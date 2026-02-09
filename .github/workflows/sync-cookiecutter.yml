@@ -3,7 +3,8 @@ name: Sync cookiecutter-hy
 on:
   push:
     branches: [main]
-    paths: ['cookiecutter-hy/**']
+    paths: ['cookiecutter-hy/**', '.github/workflows/sync-cookiecutter.yml']
+  workflow_dispatch:
 
 jobs:
   sync:

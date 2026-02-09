@@ -3,7 +3,8 @@ name: Sync copier-hy
 on:
   push:
     branches: [main]
-    paths: ['copier-hy/**']
+    paths: ['copier-hy/**', '.github/workflows/sync-copier.yml']
+  workflow_dispatch:
 
 jobs:
   sync:

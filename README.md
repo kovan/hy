@@ -6,8 +6,8 @@ Project templates for bootstrapping [Hy](https://hylang.org/) (a Lisp embedded i
 
 | Tool | Directory | Install | Usage |
 |------|-----------|---------|-------|
-| **Cookiecutter** | [cookiecutter/](cookiecutter/) | `pip install cookiecutter` | `cookiecutter gh:kovan/hy --directory cookiecutter` |
-| **PDM** | *(uses cookiecutter)* | `pip install cookiecutter` | `pdm init --cookiecutter gh:kovan/hy --directory cookiecutter` |
+| **Cookiecutter** | [cookiecutter-hy/](cookiecutter-hy/) | `pip install cookiecutter` | `cookiecutter gh:kovan/hy --directory cookiecutter-hy` |
+| **PDM** | *(uses cookiecutter)* | `pip install cookiecutter` | `pdm init --cookiecutter gh:kovan/hy --directory cookiecutter-hy` |
 | **Poetry** | [poetry/](poetry/) | `poetry self add poetry-hy-plugin` | `poetry new-hy my-project` |
 | **Hatch** | [hatch/](hatch/) | `pipx inject hatch hatch-hy` | `hatch new my-project` |
 

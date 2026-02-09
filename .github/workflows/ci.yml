@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.14"
       - run: pip install ruff
-      - run: ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter/hooks/
+      - run: ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter-hy/hooks/
 
   test-poetry:
     runs-on: ubuntu-latest
@@ -55,7 +55,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install cookiecutter
-      - run: cookiecutter --no-input cookiecutter/ -o "${{ runner.temp }}"
+      - run: cookiecutter --no-input cookiecutter-hy/ -o "${{ runner.temp }}"
       - name: Verify rendered template
         run: |
           test -f "${{ runner.temp }}/my-hy-project/pyproject.toml"

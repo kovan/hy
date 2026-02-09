@@ -10,7 +10,7 @@ $(VENV):
 	$(PIP) install -q ruff build
 
 lint: $(VENV)
-	$(VENV)/bin/ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter/hooks/
+	$(VENV)/bin/ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter-hy/hooks/
 
 test: test-poetry test-hatch test-cookiecutter
 
@@ -24,7 +24,7 @@ test-hatch: $(VENV)
 
 test-cookiecutter: $(VENV)
 	$(PIP) install -q cookiecutter
-	$(VENV)/bin/cookiecutter --no-input cookiecutter/ -o /tmp/cookiecutter-test --overwrite-if-exists
+	$(VENV)/bin/cookiecutter --no-input cookiecutter-hy/ -o /tmp/cookiecutter-test --overwrite-if-exists
 	test -f /tmp/cookiecutter-test/my-hy-project/pyproject.toml
 	test -f /tmp/cookiecutter-test/my-hy-project/tests/conftest.py
 	test -f /tmp/cookiecutter-test/my-hy-project/src/my_hy_project/__init__.py

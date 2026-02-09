@@ -15,4 +15,4 @@ jobs:
       - name: Push subtree to cookiecutter-hy repo
         run: |
           git subtree split --prefix=cookiecutter-hy -b split
-          git push https://x-access-token:${{ secrets.COOKIECUTTER_SYNC_TOKEN }}@github.com/kovan/cookiecutter-hy.git split:main --force
+          git push https://x-access-token:${{ secrets.SYNC_TOKEN }}@github.com/kovan/cookiecutter-hy.git split:main --force

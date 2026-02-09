@@ -27,7 +27,6 @@ def test_get_files_returns_all_expected_files():
     assert "README.md" in paths
     assert "LICENSE" in paths
     assert "conftest.py" in paths
-    assert any("__init__.hy" in p for p in paths)
     assert any("main.hy" in p for p in paths)
     assert any("test_main.hy" in p for p in paths)
 

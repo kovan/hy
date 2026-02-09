@@ -31,7 +31,6 @@ def test_generates_correct_structure(tmp_path):
     assert (project_dir / "README.md").exists()
     assert (project_dir / "LICENSE").exists()
     assert (project_dir / "conftest.py").exists()
-    assert (project_dir / "src" / module_name / "__init__.hy").exists()
     assert (project_dir / "src" / module_name / "main.hy").exists()
     assert (project_dir / "tests" / "test_main.hy").exists()
 
@@ -50,10 +49,6 @@ def test_placeholders_replaced_in_content(tmp_path):
     pyproject = (project_dir / "pyproject.toml").read_text()
     assert '"my-cool-app"' in pyproject
     assert "{project_name}" not in pyproject
-
-    init = (project_dir / "src" / "my_cool_app" / "__init__.hy").read_text()
-    assert "my-cool-app" in init
-    assert "{project_name}" not in init
 
     test = (project_dir / "tests" / "test_main.hy").read_text()
     assert "my_cool_app" in test

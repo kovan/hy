@@ -6,7 +6,7 @@ A [Cookiecutter](https://github.com/cookiecutter/cookiecutter) template for [Hy]
 
 ```bash
 pip install cookiecutter
-cookiecutter gh:kovan/hy --directory cookiecutter-hy
+cookiecutter gh:kovan/cookiecutter-hy
 ```
 
 You'll be prompted for:
@@ -29,9 +29,10 @@ my-hy-project/
 ├── LICENSE
 ├── src/
 │   └── my_hy_project/
-│       ├── __init__.hy
+│       ├── __init__.py
 │       └── main.hy
 └── tests/
+    ├── conftest.py
     └── test_main.hy
 ```
 

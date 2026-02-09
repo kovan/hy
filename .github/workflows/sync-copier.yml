@@ -3,8 +3,7 @@ name: Sync copier-hy
 on:
   push:
     branches: [main]
-    paths:
-      - "copier-hy/**"
+    paths: ['copier-hy/**']
 
 jobs:
   sync:
@@ -13,10 +12,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Push copier-hy to kovan/copier-hy
+      - name: Push subtree to copier-hy repo
         run: |
-          git remote add copier-hy https://x-access-token:${{ secrets.COPIER_SYNC_TOKEN }}@github.com/kovan/copier-hy.git || true
-          git subtree split --prefix=copier-hy -b copier-hy-sync
-          git push copier-hy copier-hy-sync:main --force
-          git branch -D copier-hy-sync
+          git subtree split --prefix=copier-hy -b split
+          git push https://x-access-token:${{ secrets.COPIER_SYNC_TOKEN }}@github.com/kovan/copier-hy.git split:main --force

@@ -3,7 +3,7 @@ PIP := $(VENV)/bin/pip
 PYTHON := $(VENV)/bin/python
 PYTEST := $(VENV)/bin/pytest
 
-.PHONY: lint test test-poetry test-hatch test-cookiecutter build build-poetry build-hatch clean release-poetry release-hatch
+.PHONY: lint test test-poetry test-hatch test-cookiecutter test-copier build build-poetry build-hatch clean release-poetry release-hatch
 
 $(VENV):
 	python -m venv $(VENV)
@@ -12,7 +12,7 @@ $(VENV):
 lint: $(VENV)
 	$(VENV)/bin/ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter-hy/hooks/
 
-test: test-poetry test-hatch test-cookiecutter
+test: test-poetry test-hatch test-cookiecutter test-copier
 
 test-poetry: $(VENV)
 	$(PIP) install -q -e ./poetry/ pytest
@@ -32,6 +32,18 @@ test-cookiecutter: $(VENV)
 	test -f /tmp/cookiecutter-test/my-hy-project/tests/test_main.hy
 	@echo "cookiecutter: OK"
 
+test-copier: $(VENV)
+	$(PIP) install -q copier
+	$(VENV)/bin/copier copy --defaults --vcs-ref HEAD copier-hy/ /tmp/copier-test --overwrite
+	test -f /tmp/copier-test/pyproject.toml
+	test -f /tmp/copier-test/README.md
+	test -f /tmp/copier-test/LICENSE
+	test -f /tmp/copier-test/tests/conftest.py
+	test -f /tmp/copier-test/src/my_hy_project/__init__.py
+	test -f /tmp/copier-test/src/my_hy_project/main.hy
+	test -f /tmp/copier-test/tests/test_main.hy
+	@echo "copier: OK"
+
 build: build-poetry build-hatch
 
 build-poetry: $(VENV)
@@ -41,7 +53,7 @@ build-hatch: $(VENV)
 	$(PYTHON) -m build --wheel hatch/
 
 clean:
-	rm -rf $(VENV) poetry/dist/ hatch/dist/ /tmp/cookiecutter-test
+	rm -rf $(VENV) poetry/dist/ hatch/dist/ /tmp/cookiecutter-test /tmp/copier-test
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type d -name '*.egg-info' -exec rm -rf {} +
 

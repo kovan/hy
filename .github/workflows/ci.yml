@@ -44,6 +44,28 @@ jobs:
       - run: pip install -e ./hatch/ pytest
       - run: pytest hatch/tests/
 
+  test-copier:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install copier
+      - run: copier copy --defaults --vcs-ref HEAD copier-hy/ "${{ runner.temp }}/copier-test"
+      - name: Verify rendered template
+        run: |
+          test -f "${{ runner.temp }}/copier-test/pyproject.toml"
+          test -f "${{ runner.temp }}/copier-test/README.md"
+          test -f "${{ runner.temp }}/copier-test/LICENSE"
+          test -f "${{ runner.temp }}/copier-test/tests/conftest.py"
+          test -f "${{ runner.temp }}/copier-test/src/my_hy_project/__init__.py"
+          test -f "${{ runner.temp }}/copier-test/src/my_hy_project/main.hy"
+          test -f "${{ runner.temp }}/copier-test/tests/test_main.hy"
+
   test-cookiecutter:
     runs-on: ubuntu-latest
     strategy:

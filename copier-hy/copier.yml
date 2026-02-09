@@ -1,0 +1,33 @@
+project_name:
+  type: str
+  help: Human-readable project name
+  default: My Hy Project
+
+project_slug:
+  type: str
+  help: Package/directory name (kebab-case)
+  default: "{{ project_name | lower | replace(' ', '-') }}"
+
+module_name:
+  type: str
+  help: Python import name (snake_case)
+  default: "{{ project_slug | replace('-', '_') }}"
+  validator: >-
+    {% if not (module_name | regex_search('^[_a-zA-Z][_a-zA-Z0-9]+$')) %}
+    '{{ module_name }}' is not a valid Python module name.
+    {% endif %}
+
+description:
+  type: str
+  help: Short description
+  default: A Hy project
+
+author:
+  type: str
+  help: Author name
+  default: Your Name
+
+version:
+  type: str
+  help: Initial version
+  default: "0.1.0"

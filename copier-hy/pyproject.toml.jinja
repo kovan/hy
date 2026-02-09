@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools >= 61.0", "hy >= 1.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "{{ project_slug }}"
+version = "{{ version }}"
+description = "{{ description }}"
+dependencies = ["hy >= 1.0"]
+license = {text = "MIT"}
+authors = [{name = "{{ author }}"}]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["*.hy"]

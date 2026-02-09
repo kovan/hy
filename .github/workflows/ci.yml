@@ -62,7 +62,6 @@ jobs:
           test -f "${{ runner.temp }}/my-hy-project/LICENSE"
           test -f "${{ runner.temp }}/my-hy-project/conftest.py"
           test -f "${{ runner.temp }}/my-hy-project/src/my_hy_project/__init__.py"
-          test -f "${{ runner.temp }}/my-hy-project/src/my_hy_project/__init__.hy"
           test -f "${{ runner.temp }}/my-hy-project/src/my_hy_project/main.hy"
           test -f "${{ runner.temp }}/my-hy-project/tests/test_main.hy"
 

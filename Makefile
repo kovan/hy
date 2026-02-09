@@ -1,21 +1,30 @@
+VENV := .venv
+PIP := $(VENV)/bin/pip
+PYTHON := $(VENV)/bin/python
+PYTEST := $(VENV)/bin/pytest
+
 .PHONY: lint test test-poetry test-hatch test-cookiecutter build build-poetry build-hatch clean release-poetry release-hatch
 
-lint:
-	ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter/hooks/
+$(VENV):
+	python -m venv $(VENV)
+	$(PIP) install -q ruff build
+
+lint: $(VENV)
+	$(VENV)/bin/ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter/hooks/
 
 test: test-poetry test-hatch test-cookiecutter
 
-test-poetry:
-	pip install -e ./poetry/ pytest -q
-	pytest poetry/tests/
+test-poetry: $(VENV)
+	$(PIP) install -q -e ./poetry/ pytest
+	$(PYTEST) poetry/tests/
 
-test-hatch:
-	pip install -e ./hatch/ pytest -q
-	pytest hatch/tests/
+test-hatch: $(VENV)
+	$(PIP) install -q -e ./hatch/ pytest
+	$(PYTEST) hatch/tests/
 
-test-cookiecutter:
-	pip install cookiecutter -q
-	cookiecutter --no-input cookiecutter/ -o /tmp/cookiecutter-test --overwrite-if-exists
+test-cookiecutter: $(VENV)
+	$(PIP) install -q cookiecutter
+	$(VENV)/bin/cookiecutter --no-input cookiecutter/ -o /tmp/cookiecutter-test --overwrite-if-exists
 	test -f /tmp/cookiecutter-test/my-hy-project/pyproject.toml
 	test -f /tmp/cookiecutter-test/my-hy-project/tests/conftest.py
 	test -f /tmp/cookiecutter-test/my-hy-project/src/my_hy_project/__init__.py
@@ -25,14 +34,14 @@ test-cookiecutter:
 
 build: build-poetry build-hatch
 
-build-poetry:
-	python -m build poetry/
+build-poetry: $(VENV)
+	$(PYTHON) -m build poetry/
 
-build-hatch:
-	python -m build --wheel hatch/
+build-hatch: $(VENV)
+	$(PYTHON) -m build --wheel hatch/
 
 clean:
-	rm -rf poetry/dist/ hatch/dist/ /tmp/cookiecutter-test
+	rm -rf $(VENV) poetry/dist/ hatch/dist/ /tmp/cookiecutter-test
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type d -name '*.egg-info' -exec rm -rf {} +
 

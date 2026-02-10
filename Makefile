@@ -10,7 +10,7 @@ $(VENV):
 	$(PIP) install -q ruff build
 
 lint: $(VENV)
-	$(VENV)/bin/ruff check poetry-hy/poetry_hy_plugin/ poetry-hy/tests/ hatch-hy/hatch_hy/ hatch-hy/tests/ cookiecutter-hy/hooks/
+	$(VENV)/bin/ruff check --exclude '*/templates/' poetry-hy/poetry_hy_plugin/ poetry-hy/tests/ hatch-hy/hatch_hy/ hatch-hy/tests/ cookiecutter-hy/hooks/
 
 test: test-poetry test-hatch test-cookiecutter test-copier
 

@@ -10,7 +10,7 @@ Project templates for bootstrapping [Hy](https://hylang.org/) (a Lisp embedded i
 | **PDM** | *(uses cookiecutter)* | `pip install cookiecutter` | `pdm init --cookiecutter gh:kovan/cookiecutter-hy` |
 | **Copier** | [copier-hy/](copier-hy/) | `pip install copier` | `copier copy gh:kovan/copier-hy my-project` |
 | **Poetry** | [poetry-hy/](poetry-hy/) | `poetry self add poetry-hy-plugin` | `poetry new-hy my-project` |
-| **Hatch** | [hatch-hy/](hatch-hy/) | `pipx inject hatch hatch-hy`<br>`hatch config set template.plugins.hy.src-layout true` | `hatch new my-project` |
+| **Hatch** | [hatch-hy/](hatch-hy/) | `pipx inject hatch hatch-hy` | `hatch new my-project` |
 
 The Poetry and Hatch plugins are also on PyPI:
 [poetry-hy-plugin](https://pypi.org/project/poetry-hy-plugin/) |
@@ -25,10 +25,9 @@ my-project/
 ├── pyproject.toml          # hy dependency, *.hy package-data
 ├── README.md
 ├── LICENSE
-├── src/
-│   └── my_project/
-│       ├── __init__.py
-│       └── main.hy
+├── my_project/
+│   ├── __init__.py
+│   └── main.hy
 └── tests/
     ├── conftest.py         # pytest discovery for .hy files
     └── test_main.hy

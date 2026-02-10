@@ -13,13 +13,10 @@ license = {text = "MIT"}
 [project.entry-points."poetry.application.plugin"]
 hy = "poetry_hy_plugin.plugin:HyPlugin"
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
 [tool.setuptools.package-data]
 poetry_hy_plugin = ["templates/**/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = ["-p", "no:cacheprovider", "--import-mode=importlib"]
-norecursedirs = ["src"]
+pythonpath = ["."]

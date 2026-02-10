@@ -14,12 +14,9 @@ license = {text = "MIT"}
 hatch-hy = "hatch_hy.hooks"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/hatch_hy"]
-
-[tool.hatch.build.targets.wheel.sources]
-"src" = ""
+packages = ["hatch_hy"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = ["-p", "no:cacheprovider", "--import-mode=importlib"]
-norecursedirs = ["src"]
+pythonpath = ["."]

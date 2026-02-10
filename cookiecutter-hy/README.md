@@ -7,6 +7,9 @@ A [Cookiecutter](https://github.com/cookiecutter/cookiecutter) template for [Hy]
 ```bash
 pip install cookiecutter
 cookiecutter gh:kovan/cookiecutter-hy
+cd my-hy-project
+pip install -e .
+my-hy-project
 ```
 
 You'll be prompted for:
@@ -33,12 +36,4 @@ my-hy-project/
 └── tests/
     ├── conftest.py
     └── test_main.hy
-```
-
-## Getting Started
-
-```bash
-cd my-hy-project
-pip install -e .
-my-hy-project
 ```

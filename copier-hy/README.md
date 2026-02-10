@@ -7,6 +7,9 @@ A [Copier](https://copier.readthedocs.io/) template for [Hy](https://hylang.org/
 ```bash
 pip install copier
 copier copy gh:kovan/hy/copier-hy my-hy-project
+cd my-hy-project
+pip install -e .
+my-hy-project
 ```
 
 You'll be prompted for:
@@ -33,12 +36,4 @@ my-hy-project/
 └── tests/
     ├── conftest.py
     └── test_main.hy
-```
-
-## Getting Started
-
-```bash
-cd my-hy-project
-pip install -e .
-my-hy-project
 ```

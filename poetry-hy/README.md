@@ -12,11 +12,6 @@ poetry self add poetry-hy-plugin
 
 ```bash
 poetry new-hy my-project
-```
-
-## Getting Started
-
-```bash
 cd my-project
 poetry install
 poetry run my-project

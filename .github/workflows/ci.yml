@@ -15,8 +15,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - run: pip install ruff
-      - run: ruff check poetry-hy/src/ poetry-hy/tests/ hatch-hy/src/ hatch-hy/tests/ cookiecutter-hy/hooks/
+      - run: make lint
 
   test-poetry:
     runs-on: ubuntu-latest
@@ -28,8 +27,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -e ./poetry-hy/ pytest
-      - run: pytest poetry-hy/tests/
+      - run: make test-poetry
 
   test-hatch:
     runs-on: ubuntu-latest
@@ -41,30 +39,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -e ./hatch-hy/ pytest
-      - run: pytest hatch-hy/tests/
-
-  test-copier:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.9", "3.14"]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-      - run: pip install copier
-      - run: copier copy --defaults --vcs-ref HEAD copier-hy/ "${{ runner.temp }}/copier-test"
-      - name: Verify rendered template
-        run: |
-          test -f "${{ runner.temp }}/copier-test/pyproject.toml"
-          test -f "${{ runner.temp }}/copier-test/README.md"
-          test -f "${{ runner.temp }}/copier-test/LICENSE"
-          test -f "${{ runner.temp }}/copier-test/tests/conftest.py"
-          test -f "${{ runner.temp }}/copier-test/src/my_hy_project/__init__.py"
-          test -f "${{ runner.temp }}/copier-test/src/my_hy_project/main.hy"
-          test -f "${{ runner.temp }}/copier-test/tests/test_main.hy"
+      - run: make test-hatch
 
   test-cookiecutter:
     runs-on: ubuntu-latest
@@ -76,17 +51,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install cookiecutter
-      - run: cookiecutter --no-input cookiecutter-hy/ -o "${{ runner.temp }}"
-      - name: Verify rendered template
-        run: |
-          test -f "${{ runner.temp }}/my-hy-project/pyproject.toml"
-          test -f "${{ runner.temp }}/my-hy-project/README.md"
-          test -f "${{ runner.temp }}/my-hy-project/LICENSE"
-          test -f "${{ runner.temp }}/my-hy-project/tests/conftest.py"
-          test -f "${{ runner.temp }}/my-hy-project/src/my_hy_project/__init__.py"
-          test -f "${{ runner.temp }}/my-hy-project/src/my_hy_project/main.hy"
-          test -f "${{ runner.temp }}/my-hy-project/tests/test_main.hy"
+      - run: make test-cookiecutter
+
+  test-copier:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: make test-copier
 
   build-poetry:
     runs-on: ubuntu-latest
@@ -98,8 +75,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install build
-      - run: python -m build poetry-hy/
+      - run: make build-poetry
 
   build-hatch:
     runs-on: ubuntu-latest
@@ -111,8 +87,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install build
-      - run: python -m build --wheel hatch-hy/
+      - run: make build-hatch
 
   publish-poetry:
     if: startsWith(github.ref, 'refs/tags/poetry-hy/v')
@@ -123,8 +98,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - run: pip install build
-      - run: python -m build poetry-hy/
+      - run: make build-poetry
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN }}
@@ -139,8 +113,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.14"
-      - run: pip install build
-      - run: python -m build --wheel hatch-hy/
+      - run: make build-hatch
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN }}

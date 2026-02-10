@@ -1,5 +1,7 @@
 # hy-templates
 
+![CI](https://github.com/kovan/hy/actions/workflows/ci.yml/badge.svg)
+
 Project templates for bootstrapping [Hy](https://hylang.org/) (a Lisp embedded in Python) projects.
 
 ## Templates

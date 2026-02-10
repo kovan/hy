@@ -39,5 +39,6 @@ my-hy-project/
 
 ```bash
 cd my-hy-project
-hy my_hy_project/main.hy
+pip install -e .
+my-hy-project
 ```

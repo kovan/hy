@@ -16,6 +16,14 @@ pipx inject hatch hatch-hy
 hatch new my-hy-project
 ```
 
+## Getting Started
+
+```bash
+cd my-hy-project
+pip install -e .
+my-hy-project
+```
+
 ## Generated Structure
 
 ```

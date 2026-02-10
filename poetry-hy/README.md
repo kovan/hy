@@ -16,6 +16,14 @@ cd my-project
 poetry install
 ```
 
+## Getting Started
+
+```bash
+cd my-project
+poetry install
+poetry run my-project
+```
+
 ## Generated Structure
 
 ```

@@ -10,6 +10,9 @@ dependencies = ["hy >= 1.0"]
 license = {text = "MIT"}
 authors = [{name = "{{cookiecutter.author}}"}]
 
+[project.scripts]
+{{cookiecutter.project_slug}} = "{{cookiecutter.module_name}}.main:main"
+
 [tool.setuptools.package-data]
 "*" = ["*.hy"]
 

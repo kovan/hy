@@ -8,7 +8,6 @@ A [Hatch](https://hatch.pypa.io/) template plugin for [Hy](https://hylang.org/) 
 
 ```bash
 pipx inject hatch hatch-hy
-hatch config set template.plugins.hy.src-layout true
 ```
 
 ## Usage
@@ -24,10 +23,9 @@ my-hy-project/
 ├── pyproject.toml
 ├── README.md
 ├── LICENSE
-├── src/
-│   └── my_hy_project/
-│       ├── __init__.py
-│       └── main.hy
+├── my_hy_project/
+│   ├── __init__.py
+│   └── main.hy
 └── tests/
     ├── conftest.py
     └── test_main.hy

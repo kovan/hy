@@ -1,4 +1,6 @@
 (import {{ module_name }}.main [main])
 
-(defn test-main []
-  (assert (is (main) None)))
+(defn test-main [capsys]
+  (main)
+  (let [captured (.readouterr capsys)]
+    (assert (in "Hello" captured.out))))

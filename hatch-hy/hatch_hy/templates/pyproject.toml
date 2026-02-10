@@ -9,6 +9,9 @@ description = "{description}"
 dependencies = ["hy >= 1.0"]
 license = {text = "MIT"}
 
+[project.scripts]
+{project_name} = "{module_name}.main:main"
+
 [tool.setuptools.package-data]
 "*" = ["*.hy"]
 

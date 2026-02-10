@@ -10,6 +10,9 @@ dependencies = ["hy >= 1.0"]
 license = {text = "MIT"}
 authors = [{name = "{{ author }}"}]
 
+[project.scripts]
+{{ project_slug }} = "{{ module_name }}.main:main"
+
 [tool.setuptools.package-data]
 "*" = ["*.hy"]
 

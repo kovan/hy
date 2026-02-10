@@ -23,10 +23,10 @@ my-project/
 ├── pyproject.toml
 ├── README.md
 ├── LICENSE
-├── src/
-│   └── my_project/
-│       ├── __init__.hy
-│       └── main.hy
+├── my_project/
+│   ├── __init__.py
+│   └── main.hy
 └── tests/
+    ├── conftest.py
     └── test_main.hy
 ```

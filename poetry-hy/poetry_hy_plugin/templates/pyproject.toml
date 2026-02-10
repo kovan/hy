@@ -6,6 +6,9 @@ authors = []
 license = "MIT"
 packages = [{include = "{module_name}"}]
 
+[tool.poetry.scripts]
+{project_name} = "{module_name}.main:main"
+
 [tool.poetry.dependencies]
 hy = {version = ">=1.0", python = "{hy_python_requires}"}
 

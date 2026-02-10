@@ -15,11 +15,11 @@ lint: $(VENV)
 test: test-poetry test-hatch test-cookiecutter test-copier
 
 test-poetry: $(VENV)
-	$(PIP) install -q -e ./poetry-hy/ pytest
+	$(PIP) install -q -e ./poetry-hy/ pytest hy
 	$(PYTEST) poetry-hy/tests/
 
 test-hatch: $(VENV)
-	$(PIP) install -q -e ./hatch-hy/ pytest
+	$(PIP) install -q -e ./hatch-hy/ pytest hy
 	$(PYTEST) hatch-hy/tests/
 
 test-cookiecutter: $(VENV)

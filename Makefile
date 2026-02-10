@@ -10,7 +10,7 @@ $(VENV):
 	$(PIP) install -q ruff build
 
 lint: $(VENV)
-	$(VENV)/bin/ruff check poetry-hy/src/ poetry-hy/tests/ hatch-hy/src/ hatch-hy/tests/ cookiecutter-hy/hooks/
+	$(VENV)/bin/ruff check poetry-hy/poetry_hy_plugin/ poetry-hy/tests/ hatch-hy/hatch_hy/ hatch-hy/tests/ cookiecutter-hy/hooks/
 
 test: test-poetry test-hatch test-cookiecutter test-copier
 
@@ -27,8 +27,8 @@ test-cookiecutter: $(VENV)
 	$(VENV)/bin/cookiecutter --no-input cookiecutter-hy/ -o /tmp/cookiecutter-test --overwrite-if-exists
 	test -f /tmp/cookiecutter-test/my-hy-project/pyproject.toml
 	test -f /tmp/cookiecutter-test/my-hy-project/tests/conftest.py
-	test -f /tmp/cookiecutter-test/my-hy-project/src/my_hy_project/__init__.py
-	test -f /tmp/cookiecutter-test/my-hy-project/src/my_hy_project/main.hy
+	test -f /tmp/cookiecutter-test/my-hy-project/my_hy_project/__init__.py
+	test -f /tmp/cookiecutter-test/my-hy-project/my_hy_project/main.hy
 	test -f /tmp/cookiecutter-test/my-hy-project/tests/test_main.hy
 	@echo "cookiecutter: OK"
 
@@ -39,8 +39,8 @@ test-copier: $(VENV)
 	test -f /tmp/copier-test/README.md
 	test -f /tmp/copier-test/LICENSE
 	test -f /tmp/copier-test/tests/conftest.py
-	test -f /tmp/copier-test/src/my_hy_project/__init__.py
-	test -f /tmp/copier-test/src/my_hy_project/main.hy
+	test -f /tmp/copier-test/my_hy_project/__init__.py
+	test -f /tmp/copier-test/my_hy_project/main.hy
 	test -f /tmp/copier-test/tests/test_main.hy
 	@echo "copier: OK"
 

@@ -10,17 +10,17 @@ $(VENV):
 	$(PIP) install -q ruff build
 
 lint: $(VENV)
-	$(VENV)/bin/ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter-hy/hooks/
+	$(VENV)/bin/ruff check poetry-hy/src/ poetry-hy/tests/ hatch-hy/src/ hatch-hy/tests/ cookiecutter-hy/hooks/
 
 test: test-poetry test-hatch test-cookiecutter test-copier
 
 test-poetry: $(VENV)
-	$(PIP) install -q -e ./poetry/ pytest
-	$(PYTEST) poetry/tests/
+	$(PIP) install -q -e ./poetry-hy/ pytest
+	$(PYTEST) poetry-hy/tests/
 
 test-hatch: $(VENV)
-	$(PIP) install -q -e ./hatch/ pytest
-	$(PYTEST) hatch/tests/
+	$(PIP) install -q -e ./hatch-hy/ pytest
+	$(PYTEST) hatch-hy/tests/
 
 test-cookiecutter: $(VENV)
 	$(PIP) install -q cookiecutter
@@ -47,30 +47,30 @@ test-copier: $(VENV)
 build: build-poetry build-hatch
 
 build-poetry: $(VENV)
-	$(PYTHON) -m build poetry/
+	$(PYTHON) -m build poetry-hy/
 
 build-hatch: $(VENV)
-	$(PYTHON) -m build --wheel hatch/
+	$(PYTHON) -m build --wheel hatch-hy/
 
 clean:
-	rm -rf $(VENV) poetry/dist/ hatch/dist/ /tmp/cookiecutter-test /tmp/copier-test
+	rm -rf $(VENV) poetry-hy/dist/ hatch-hy/dist/ /tmp/cookiecutter-test /tmp/copier-test
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type d -name '*.egg-info' -exec rm -rf {} +
 
 # Usage: make release-poetry VERSION=0.1.2
 release-poetry:
 	@test -n "$(VERSION)" || (echo "Usage: make release-poetry VERSION=x.y.z" && exit 1)
-	sed -i 's/^version = ".*"/version = "$(VERSION)"/' poetry/pyproject.toml
-	git add poetry/pyproject.toml
+	sed -i 's/^version = ".*"/version = "$(VERSION)"/' poetry-hy/pyproject.toml
+	git add poetry-hy/pyproject.toml
 	git commit -m "Release poetry-hy-plugin $(VERSION)"
-	git tag poetry/v$(VERSION)
-	git push origin main poetry/v$(VERSION)
+	git tag poetry-hy/v$(VERSION)
+	git push origin main poetry-hy/v$(VERSION)
 
 # Usage: make release-hatch VERSION=0.1.2
 release-hatch:
 	@test -n "$(VERSION)" || (echo "Usage: make release-hatch VERSION=x.y.z" && exit 1)
-	sed -i 's/^version = ".*"/version = "$(VERSION)"/' hatch/pyproject.toml
-	git add hatch/pyproject.toml
+	sed -i 's/^version = ".*"/version = "$(VERSION)"/' hatch-hy/pyproject.toml
+	git add hatch-hy/pyproject.toml
 	git commit -m "Release hatch-hy $(VERSION)"
-	git tag hatch/v$(VERSION)
-	git push origin main hatch/v$(VERSION)
+	git tag hatch-hy/v$(VERSION)
+	git push origin main hatch-hy/v$(VERSION)

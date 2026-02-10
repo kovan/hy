@@ -8,8 +8,8 @@ Project templates for bootstrapping [Hy](https://hylang.org/) (a Lisp embedded i
 |------|-----------|---------|-------|
 | **Cookiecutter** | [cookiecutter-hy/](cookiecutter-hy/) | `pip install cookiecutter` | `cookiecutter gh:kovan/cookiecutter-hy` |
 | **PDM** | *(uses cookiecutter)* | `pip install cookiecutter` | `pdm init --cookiecutter gh:kovan/cookiecutter-hy` |
-| **Poetry** | [poetry/](poetry/) | `poetry self add poetry-hy-plugin` | `poetry new-hy my-project` |
-| **Hatch** | [hatch/](hatch/) | `pipx inject hatch hatch-hy` | `hatch new my-project` |
+| **Poetry** | [poetry-hy/](poetry-hy/) | `poetry self add poetry-hy-plugin` | `poetry new-hy my-project` |
+| **Hatch** | [hatch-hy/](hatch-hy/) | `pipx inject hatch hatch-hy` | `hatch new my-project` |
 | **Copier** | [copier-hy/](copier-hy/) | `pip install copier` | `copier copy gh:kovan/copier-hy my-project` |
 
 The Poetry and Hatch plugins are also on PyPI:

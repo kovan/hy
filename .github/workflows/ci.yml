@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches: [main]
-    tags: ["poetry/v*", "hatch/v*"]
+    tags: ["poetry-hy/v*", "hatch-hy/v*"]
   pull_request:
     branches: [main]
 
@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: "3.14"
       - run: pip install ruff
-      - run: ruff check poetry/src/ poetry/tests/ hatch/src/ hatch/tests/ cookiecutter-hy/hooks/
+      - run: ruff check poetry-hy/src/ poetry-hy/tests/ hatch-hy/src/ hatch-hy/tests/ cookiecutter-hy/hooks/
 
   test-poetry:
     runs-on: ubuntu-latest
@@ -28,8 +28,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -e ./poetry/ pytest
-      - run: pytest poetry/tests/
+      - run: pip install -e ./poetry-hy/ pytest
+      - run: pytest poetry-hy/tests/
 
   test-hatch:
     runs-on: ubuntu-latest
@@ -41,8 +41,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install -e ./hatch/ pytest
-      - run: pytest hatch/tests/
+      - run: pip install -e ./hatch-hy/ pytest
+      - run: pytest hatch-hy/tests/
 
   test-copier:
     runs-on: ubuntu-latest
@@ -99,7 +99,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install build
-      - run: python -m build poetry/
+      - run: python -m build poetry-hy/
 
   build-hatch:
     runs-on: ubuntu-latest
@@ -112,10 +112,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install build
-      - run: python -m build --wheel hatch/
+      - run: python -m build --wheel hatch-hy/
 
   publish-poetry:
-    if: startsWith(github.ref, 'refs/tags/poetry/v')
+    if: startsWith(github.ref, 'refs/tags/poetry-hy/v')
     needs: [lint, test-poetry, build-poetry]
     runs-on: ubuntu-latest
     steps:
@@ -124,14 +124,14 @@ jobs:
         with:
           python-version: "3.14"
       - run: pip install build
-      - run: python -m build poetry/
+      - run: python -m build poetry-hy/
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN }}
-          packages-dir: poetry/dist/
+          packages-dir: poetry-hy/dist/
 
   publish-hatch:
-    if: startsWith(github.ref, 'refs/tags/hatch/v')
+    if: startsWith(github.ref, 'refs/tags/hatch-hy/v')
     needs: [lint, test-hatch, build-hatch]
     runs-on: ubuntu-latest
     steps:
@@ -140,8 +140,8 @@ jobs:
         with:
           python-version: "3.14"
       - run: pip install build
-      - run: python -m build --wheel hatch/
+      - run: python -m build --wheel hatch-hy/
       - uses: pypa/gh-action-pypi-publish@release/v1
         with:
           password: ${{ secrets.PYPI_TOKEN }}
-          packages-dir: hatch/dist/
+          packages-dir: hatch-hy/dist/

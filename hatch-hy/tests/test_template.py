@@ -1,7 +1,7 @@
 from hatch_hy.template import HyTemplate
 
 
-def _make_template(src_layout=True):
+def _make_template(src_layout=False):
     plugin_config = {"src-layout": src_layout}
     t = HyTemplate(plugin_config, cache_dir="/tmp", creation_time=None)
     return t

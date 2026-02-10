@@ -17,9 +17,9 @@ def _generate_project(tmp_path, name="my-cool-app"):
     for template_path in templates.iterdir():
         _copy_tree(template_path, project_dir, replacements)
 
-    placeholder = project_dir / "src" / "hy_project"
+    placeholder = project_dir / "hy_project"
     if placeholder.exists():
-        placeholder.rename(project_dir / "src" / module_name)
+        placeholder.rename(project_dir / module_name)
 
     return project_dir, module_name
 
@@ -31,7 +31,7 @@ def test_generates_correct_structure(tmp_path):
     assert (project_dir / "README.md").exists()
     assert (project_dir / "LICENSE").exists()
     assert (project_dir / "tests" / "conftest.py").exists()
-    assert (project_dir / "src" / module_name / "main.hy").exists()
+    assert (project_dir / module_name / "main.hy").exists()
     assert (project_dir / "tests" / "test_main.hy").exists()
 
 
@@ -39,8 +39,8 @@ def test_module_directory_renamed(tmp_path):
     project_dir, module_name = _generate_project(tmp_path, "my-cool-app")
 
     assert module_name == "my_cool_app"
-    assert (project_dir / "src" / "my_cool_app").is_dir()
-    assert not (project_dir / "src" / "hy_project").exists()
+    assert (project_dir / "my_cool_app").is_dir()
+    assert not (project_dir / "hy_project").exists()
 
 
 def test_placeholders_replaced_in_content(tmp_path):

@@ -12,15 +12,11 @@ class HyTemplate(TemplateInterface):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.plugin_config.setdefault("src-layout", True)
+        self.plugin_config.setdefault("src-layout", False)
 
     def initialize_config(self, config):
         pkg = config["package_name"]
-        if self.plugin_config["src-layout"]:
-            config["readme_file_path"] = "README.md"
-            config["package_metadata_file_path"] = f"src/{pkg}/__about__.hy"
-        else:
-            config["package_metadata_file_path"] = f"{pkg}/__about__.hy"
+        config["package_metadata_file_path"] = f"{pkg}/__about__.hy"
 
     def get_files(self, config):
         pkg = config["package_name"]
@@ -56,13 +52,11 @@ class HyTemplate(TemplateInterface):
         for f in to_remove:
             files.remove(f)
 
-        if self.plugin_config["src-layout"]:
-            for f in files:
-                if f.path and f.path.parts and f.path.parts[0] == "src":
-                    parts = list(f.path.parts)
-                    if len(parts) >= 3 and parts[1] == "hy_project":
-                        parts[1] = pkg
-                        f.path = Path(*parts)
+        for f in files:
+            if f.path and f.path.parts and f.path.parts[0] == "hy_project":
+                parts = list(f.path.parts)
+                parts[0] = pkg
+                f.path = Path(*parts)
 
 
 def _collect_files(source_dir, rel_path, replacements, result):

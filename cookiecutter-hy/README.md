@@ -27,10 +27,9 @@ my-hy-project/
 ├── pyproject.toml
 ├── README.md
 ├── LICENSE
-├── src/
-│   └── my_hy_project/
-│       ├── __init__.py
-│       └── main.hy
+├── my_hy_project/
+│   ├── __init__.py
+│   └── main.hy
 └── tests/
     ├── conftest.py
     └── test_main.hy
@@ -40,6 +39,5 @@ my-hy-project/
 
 ```bash
 cd my-hy-project
-pip install -e .
-hy src/my_hy_project/main.hy
+hy my_hy_project/main.hy
 ```

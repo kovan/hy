@@ -57,9 +57,9 @@ class NewHyCommand(Command):
             _copy_tree(template_path, project_dir, replacements)
 
         # Rename the placeholder module directory
-        placeholder = project_dir / "src" / "hy_project"
+        placeholder = project_dir / "hy_project"
         if placeholder.exists():
-            placeholder.rename(project_dir / "src" / module_name)
+            placeholder.rename(project_dir / module_name)
 
         self.line(f"<info>Created Hy project at</info> <comment>{project_dir}</comment>")
         return 0

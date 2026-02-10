@@ -9,8 +9,8 @@ description = "{description}"
 dependencies = ["hy >= 1.0"]
 license = {text = "MIT"}
 
-[tool.setuptools.packages.find]
-where = ["src"]
-
 [tool.setuptools.package-data]
 "*" = ["*.hy"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

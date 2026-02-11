@@ -22,7 +22,7 @@ my-hy-project
 To run tests:
 
 ```bash
-pip install -e ".[test]"
+pip install -e ".[dev]"
 pytest
 ```
 

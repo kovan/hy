@@ -19,6 +19,13 @@ pip install -e .
 my-hy-project
 ```
 
+To run tests:
+
+```bash
+pip install -e ".[test]"
+pytest
+```
+
 ## Generated Structure
 
 ```

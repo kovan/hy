@@ -12,6 +12,13 @@ pip install -e .
 my-hy-project
 ```
 
+To run tests:
+
+```bash
+pip install -e ".[test]"
+pytest
+```
+
 You'll be prompted for:
 
 | Variable | Default | Description |

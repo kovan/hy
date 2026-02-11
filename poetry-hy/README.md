@@ -17,6 +17,12 @@ poetry install
 poetry run my-project
 ```
 
+To run tests:
+
+```bash
+poetry run pytest
+```
+
 ## Generated Structure
 
 ```

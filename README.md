@@ -14,7 +14,8 @@ Project templates for bootstrapping [Hy](https://hylang.org/) (a Lisp embedded i
 | **Poetry** | [poetry-hy/](poetry-hy/) | `poetry self add poetry-hy-plugin` | `poetry new-hy my-project` |
 | **Hatch** | [hatch-hy/](hatch-hy/) | `pipx inject hatch hatch-hy` | `hatch new my-project` |
 
-The Poetry and Hatch plugins are also on PyPI:
+The plugins are also on PyPI:
+[pytest-hy](https://pypi.org/project/pytest-hy/) |
 [poetry-hy-plugin](https://pypi.org/project/poetry-hy-plugin/) |
 [hatch-hy](https://pypi.org/project/hatch-hy/)
 
@@ -31,7 +32,6 @@ my-project/
 │   ├── __init__.py
 │   └── main.hy
 └── tests/
-    ├── conftest.py         # pytest discovery for .hy files
     └── test_main.hy
 ```
 
@@ -40,6 +40,6 @@ my-project/
 Starting a Hy project requires non-obvious boilerplate:
 - `*.hy` in `package-data` so `.hy` files get included in wheels
 - `hy` as both a build and runtime dependency
-- `conftest.py` with a `pytest_collect_file` hook for `.hy` test discovery
+- `pytest-hy` for `.hy` test discovery
 
 These templates handle all of that.

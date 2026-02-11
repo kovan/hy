@@ -44,7 +44,7 @@ class HyTemplate(TemplateInterface):
                 continue
             name = f.path.name
             # Remove duplicate top-level files we already provide
-            if name in ("pyproject.toml", "LICENSE", "LICENSE.txt", "README.md", "conftest.py"):
+            if name in ("pyproject.toml", "LICENSE", "LICENSE.txt", "README.md"):
                 to_remove.append(f)
             # Remove default plugin's __about__.py
             elif f.path.parts and f.path.parts[0] == "src" and name == "__about__.py":

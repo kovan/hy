@@ -16,5 +16,9 @@ hy = {version = ">=1.0", python = "{hy_python_requires}"}
 requires = ["poetry-core", "hy >= 1.0"]
 build-backend = "poetry.core.masonry.api"
 
+[tool.poetry.group.dev.dependencies]
+pytest = ">=7.0"
+pytest-hy = ">=0.1.0"
+
 [tool.pytest.ini_options]
 pythonpath = ["."]

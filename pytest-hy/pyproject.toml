@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pytest-hy"
+version = "0.1.0"
+description = "Pytest plugin for discovering and running Hy test files"
+requires-python = ">= 3.9"
+dependencies = ["hy >= 1.0", "pytest >= 7.0"]
+license = {text = "MIT"}
+
+[project.entry-points.pytest11]
+hy = "pytest_hy.plugin"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

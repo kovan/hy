@@ -34,6 +34,5 @@ my-hy-project/
 │   ├── __init__.py
 │   └── main.hy
 └── tests/
-    ├── conftest.py
     └── test_main.hy
 ```

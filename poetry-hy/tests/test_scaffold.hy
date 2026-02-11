@@ -29,7 +29,6 @@
   (assert (.exists (/ project-dir "pyproject.toml")))
   (assert (.exists (/ project-dir "README.md")))
   (assert (.exists (/ project-dir "LICENSE")))
-  (assert (.exists (/ project-dir "tests" "conftest.py")))
   (assert (.exists (/ project-dir module-name "main.hy")))
   (assert (.exists (/ project-dir "tests" "test_main.hy"))))
 

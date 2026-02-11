@@ -16,5 +16,8 @@ authors = [{name = "{{ author }}"}]
 [tool.setuptools.package-data]
 "*" = ["*.hy"]
 
+[project.optional-dependencies]
+test = ["pytest", "pytest-hy"]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]

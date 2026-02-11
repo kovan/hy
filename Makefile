@@ -3,30 +3,33 @@ PIP := $(VENV)/bin/pip
 PYTHON := $(VENV)/bin/python
 PYTEST := $(VENV)/bin/pytest
 
-.PHONY: lint test test-poetry test-hatch test-cookiecutter test-copier build build-poetry build-hatch clean release-poetry release-hatch
+.PHONY: lint test test-pytest-hy test-poetry test-hatch test-cookiecutter test-copier build build-pytest-hy build-poetry build-hatch clean release-pytest-hy release-poetry release-hatch
 
 $(VENV):
 	python -m venv $(VENV)
 	$(PIP) install -q ruff build
 
 lint: $(VENV)
-	$(VENV)/bin/ruff check --exclude '*/templates/' poetry-hy/poetry_hy_plugin/ poetry-hy/tests/ hatch-hy/hatch_hy/ hatch-hy/tests/ cookiecutter-hy/hooks/
+	$(VENV)/bin/ruff check --exclude '*/templates/' pytest-hy/pytest_hy/ poetry-hy/poetry_hy_plugin/ poetry-hy/tests/ hatch-hy/hatch_hy/ hatch-hy/tests/ cookiecutter-hy/hooks/
 
-test: test-poetry test-hatch test-cookiecutter test-copier
+test: test-pytest-hy test-poetry test-hatch test-cookiecutter test-copier
+
+test-pytest-hy: $(VENV)
+	$(PIP) install -q -e ./pytest-hy/
+	$(PYTEST) pytest-hy/tests/
 
 test-poetry: $(VENV)
-	$(PIP) install -q -e ./poetry-hy/ pytest hy
+	$(PIP) install -q -e ./pytest-hy/ -e ./poetry-hy/ pytest hy
 	$(PYTEST) poetry-hy/tests/
 
 test-hatch: $(VENV)
-	$(PIP) install -q -e ./hatch-hy/ pytest hy
+	$(PIP) install -q -e ./pytest-hy/ -e ./hatch-hy/ pytest hy
 	$(PYTEST) hatch-hy/tests/
 
 test-cookiecutter: $(VENV)
 	$(PIP) install -q cookiecutter
 	$(VENV)/bin/cookiecutter --no-input cookiecutter-hy/ -o /tmp/cookiecutter-test --overwrite-if-exists
 	test -f /tmp/cookiecutter-test/my-hy-project/pyproject.toml
-	test -f /tmp/cookiecutter-test/my-hy-project/tests/conftest.py
 	test -f /tmp/cookiecutter-test/my-hy-project/my_hy_project/__init__.py
 	test -f /tmp/cookiecutter-test/my-hy-project/my_hy_project/main.hy
 	test -f /tmp/cookiecutter-test/my-hy-project/tests/test_main.hy
@@ -38,13 +41,15 @@ test-copier: $(VENV)
 	test -f /tmp/copier-test/pyproject.toml
 	test -f /tmp/copier-test/README.md
 	test -f /tmp/copier-test/LICENSE
-	test -f /tmp/copier-test/tests/conftest.py
 	test -f /tmp/copier-test/my_hy_project/__init__.py
 	test -f /tmp/copier-test/my_hy_project/main.hy
 	test -f /tmp/copier-test/tests/test_main.hy
 	@echo "copier: OK"
 
-build: build-poetry build-hatch
+build: build-pytest-hy build-poetry build-hatch
+
+build-pytest-hy: $(VENV)
+	$(PYTHON) -m build pytest-hy/
 
 build-poetry: $(VENV)
 	$(PYTHON) -m build poetry-hy/
@@ -53,9 +58,18 @@ build-hatch: $(VENV)
 	$(PYTHON) -m build --wheel hatch-hy/
 
 clean:
-	rm -rf $(VENV) poetry-hy/dist/ hatch-hy/dist/ /tmp/cookiecutter-test /tmp/copier-test
+	rm -rf $(VENV) pytest-hy/dist/ poetry-hy/dist/ hatch-hy/dist/ /tmp/cookiecutter-test /tmp/copier-test
 	find . -type d -name __pycache__ -exec rm -rf {} +
 	find . -type d -name '*.egg-info' -exec rm -rf {} +
+
+# Usage: make release-pytest-hy VERSION=0.1.0
+release-pytest-hy:
+	@test -n "$(VERSION)" || (echo "Usage: make release-pytest-hy VERSION=x.y.z" && exit 1)
+	sed -i 's/^version = ".*"/version = "$(VERSION)"/' pytest-hy/pyproject.toml
+	git add pytest-hy/pyproject.toml
+	git commit -m "Release pytest-hy $(VERSION)"
+	git tag pytest-hy/v$(VERSION)
+	git push origin main pytest-hy/v$(VERSION)
 
 # Usage: make release-poetry VERSION=0.1.2
 release-poetry:

@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches: [main]
-    tags: ["poetry-hy/v*", "hatch-hy/v*"]
+    tags: ["pytest-hy/v*", "poetry-hy/v*", "hatch-hy/v*"]
   pull_request:
     branches: [main]
 
@@ -16,6 +16,18 @@ jobs:
         with:
           python-version: "3.14"
       - run: make lint
+
+  test-pytest-hy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: make test-pytest-hy
 
   test-poetry:
     runs-on: ubuntu-latest
@@ -65,6 +77,18 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: make test-copier
 
+  build-pytest-hy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: make build-pytest-hy
+
   build-poetry:
     runs-on: ubuntu-latest
     strategy:
@@ -88,6 +112,21 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: make build-hatch
+
+  publish-pytest-hy:
+    if: startsWith(github.ref, 'refs/tags/pytest-hy/v')
+    needs: [lint, test-pytest-hy, build-pytest-hy]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+      - run: make build-pytest-hy
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_TOKEN }}
+          packages-dir: pytest-hy/dist/
 
   publish-poetry:
     if: startsWith(github.ref, 'refs/tags/poetry-hy/v')

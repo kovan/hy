@@ -23,7 +23,6 @@
   (assert (in "pyproject.toml" paths))
   (assert (in "README.md" paths))
   (assert (in "LICENSE" paths))
-  (assert (any (gfor p paths (in "conftest.py" p))))
   (assert (any (gfor p paths (in "main.hy" p))))
   (assert (any (gfor p paths (in "test_main.hy" p)))))
 

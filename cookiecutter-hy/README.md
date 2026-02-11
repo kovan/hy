@@ -21,14 +21,14 @@ pytest
 
 You'll be prompted for:
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `project_name` | My Hy Project | Human-readable project name |
-| `project_slug` | my-hy-project | Package/directory name |
-| `module_name` | my_hy_project | Python import name |
-| `description` | A Hy project | Short description |
-| `author` | Your Name | Author name |
-| `version` | 0.1.0 | Initial version |
+| Variable | Description |
+|----------|-------------|
+| `project_name` | Human-readable project name |
+| `project_slug` | Package/directory name |
+| `module_name` | Python import name |
+| `description` | Short description |
+| `author` | Author name |
+| `version` | Initial version |
 
 ## Generated Structure
 

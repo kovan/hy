@@ -19,6 +19,24 @@ pip install -e ".[dev]"
 pytest
 ```
 
+## Usage with uv
+
+You can scaffold and manage the project entirely with [uv](https://docs.astral.sh/uv/) — no global installs needed:
+
+```bash
+uvx copier copy gh:kovan/hy/copier-hy my-hy-project
+cd my-hy-project
+uv sync
+uv run my-hy-project
+```
+
+To run tests:
+
+```bash
+uv sync --extra dev
+uv run pytest
+```
+
 You'll be prompted for:
 
 | Variable | Description |
